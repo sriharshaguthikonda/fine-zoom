@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Fine Zoom Step</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="card">
+      <header class="header">
+        <h1>Fine Zoom Step</h1>
+        <p>Fine-grained zoom controls for keyboard and Ctrl/Cmd plus Wheel.</p>
+      </header>
+
+      <section class="section">
+        <h2>Step Size</h2>
+        <label class="field">
+          <span>Step size (%)</span>
+          <input id="stepPercent" type="number" min="0.1" max="10" step="0.1">
+        </label>
+      </section>
+
+      <section class="section">
+        <h2>Ctrl/Cmd plus Wheel</h2>
+        <label class="field">
+          <span>Mode</span>
+          <select id="ctrlWheelMode">
+            <option value="off">Off</option>
+            <option value="zoom">Zoom using step size</option>
+            <option value="block">Block browser zoom (scroll instead)</option>
+          </select>
+        </label>
+
+        <div class="grid">
+          <label class="field">
+            <span>Scroll threshold (px)</span>
+            <input id="scrollThreshold" type="number" min="1" max="200" step="1">
+          </label>
+          <label class="field">
+            <span>Min delay (ms)</span>
+            <input id="minDelayMs" type="number" min="0" max="1000" step="10">
+          </label>
+        </div>
+
+        <label class="field checkbox">
+          <input id="directionReversed" type="checkbox">
+          <span>Reverse wheel direction</span>
+        </label>
+        <label class="field checkbox">
+          <input id="smoothScroll" type="checkbox">
+          <span>Smooth scroll when blocking browser zoom</span>
+        </label>
+      </section>
+
+      <section class="section">
+        <h2>Shortcuts</h2>
+        <p>Change shortcuts in chrome://extensions/shortcuts.</p>
+      </section>
+
+      <footer class="footer">
+        <button id="reset" type="button">Reset to defaults</button>
+        <span id="status" role="status"></span>
+      </footer>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

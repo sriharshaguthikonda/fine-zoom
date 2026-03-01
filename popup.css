@@ -1,0 +1,149 @@
+:root {
+  --ink: #1f1a17;
+  --muted: #5c5652;
+  --accent: #d66a4a;
+  --panel: #fffdf9;
+  --line: #e7ddd3;
+  --shadow: 0 10px 30px rgba(48, 32, 22, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-width: 320px;
+  color: var(--ink);
+  font-family: "Trebuchet MS", "Gill Sans", "Verdana", sans-serif;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(255, 233, 212, 0.8), transparent 45%),
+    radial-gradient(circle at 85% 5%, rgba(255, 214, 186, 0.7), transparent 40%),
+    linear-gradient(150deg, #f8efe7 0%, #f6e6d9 100%);
+}
+
+.card {
+  max-width: 420px;
+  margin: 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.header {
+  padding: 24px 28px 20px;
+  background: linear-gradient(120deg, #fff2e7, #fde7d2);
+  border-bottom: 1px solid var(--line);
+}
+
+.header h1 {
+  margin: 0 0 6px;
+  font-size: 26px;
+  letter-spacing: 0.3px;
+}
+
+.header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.section {
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--line);
+}
+
+.section h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  color: var(--ink);
+}
+
+.field span {
+  flex: 1;
+}
+
+.field input[type="number"],
+.field select {
+  width: 220px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.field.checkbox {
+  justify-content: flex-start;
+}
+
+.field.checkbox input {
+  margin-right: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0 20px;
+}
+
+.footer {
+  padding: 16px 28px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+button {
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(214, 106, 74, 0.28);
+}
+
+#status {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 480px) {
+  .card {
+    margin: 10px;
+  }
+
+  .field {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .field input[type="number"],
+  .field select {
+    width: 100%;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
