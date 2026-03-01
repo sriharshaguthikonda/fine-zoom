@@ -1,0 +1,27 @@
+# OS junk
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor settings
+.vscode/
+.idea/
+*.swp
+
+# Extension package outputs
+*.crx
+*.zip
+*.pem
+
+# Node tooling (if added later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build artifacts (if added later)
+dist/
+build/
+out/
+coverage/
