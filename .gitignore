@@ -25,3 +25,19 @@ dist/
 build/
 out/
 coverage/
+
+# Chrome Web Store listing assets (kept local)
+store-assets/
+webstore-assets/
+listing-assets/
+screenshots/
+promo/
+promo-*.png
+promo-*.jpg
+promo-*.jpeg
+marquee-*.png
+marquee-*.jpg
+marquee-*.jpeg
+screenshot-*.png
+screenshot-*.jpg
+screenshot-*.jpeg
