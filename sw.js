@@ -25,6 +25,11 @@ function roundZoom(value) {
   return Number(value.toFixed(3));
 }
 
+function logError(context, error) {
+  const message = error && error.message ? error.message : String(error || "Unknown error");
+  console.warn(`[Fine Zoom Step] ${context}: ${message}`);
+}
+
 async function getSettings() {
   const items = await chrome.storage.sync.get(DEFAULTS);
   return {
@@ -37,11 +42,6 @@ async function getSettings() {
   };
 }
 
-async function getActiveTabId() {
-  const tabs = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
-  return tabs[0]?.id;
-}
-
 async function applyZoomDelta(tabId, deltaPercent, settingsOverride) {
   const settings = settingsOverride || (await getSettings());
   const current = await chrome.tabs.getZoom(tabId);
@@ -51,12 +51,6 @@ async function applyZoomDelta(tabId, deltaPercent, settingsOverride) {
     settings.maxZoom
   );
   await chrome.tabs.setZoom(tabId, next);
-}
-
-async function handleCommand(command) {
-  const tabId = await getActiveTabId();
-  if (!tabId) return;
-  await applyCommand(tabId, command);
 }
 
 async function applyCommand(tabId, command) {
@@ -73,17 +67,15 @@ async function applyCommand(tabId, command) {
   }
 }
 
-chrome.commands.onCommand.addListener((command) => {
-  handleCommand(command).catch(() => {});
-});
-
 chrome.runtime.onMessage.addListener((message, sender) => {
   if (!message) return;
   const tabId = sender?.tab?.id;
   if (!tabId) return;
 
   if (message.type === "shortcutCommand") {
-    applyCommand(tabId, message.command).catch(() => {});
+    applyCommand(tabId, message.command).catch((error) => {
+      logError("shortcutCommand", error);
+    });
     return;
   }
 
@@ -98,7 +90,9 @@ chrome.runtime.onMessage.addListener((message, sender) => {
             : settings.stepPercent;
         return applyZoomDelta(tabId, direction * stepPercent, settings);
       })
-      .catch(() => {});
+      .catch((error) => {
+        logError("wheelZoom", error);
+      });
   }
 });
 

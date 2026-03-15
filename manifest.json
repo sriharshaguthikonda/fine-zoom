@@ -5,20 +5,6 @@
   "description": "Fine-grained tab zoom with keyboard shortcuts and optional Ctrl+Wheel control.",
   "permissions": ["storage", "tabs"],
   "background": { "service_worker": "sw.js" },
-  "commands": {
-    "zoom_in": {
-      "suggested_key": { "default": "Ctrl+Shift+Up" },
-      "description": "Zoom in by step size"
-    },
-    "zoom_out": {
-      "suggested_key": { "default": "Ctrl+Shift+Down" },
-      "description": "Zoom out by step size"
-    },
-    "zoom_reset": {
-      "suggested_key": { "default": "Ctrl+Shift+0" },
-      "description": "Reset zoom to default"
-    }
-  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
