@@ -6,6 +6,7 @@
 - Customizable zoom step size (default 1%).
 - Shift plus Wheel zoom with a dedicated default 5% step.
 - In-popup customizable keyboard shortcuts for zoom in, zoom out, and reset.
+- Shortcut matching is layout-robust (based on physical key codes where possible).
 - Optional Ctrl/Cmd plus Wheel to zoom, or block browser zoom while keeping scroll.
 - Adjustable scroll threshold, delay, and direction.
 

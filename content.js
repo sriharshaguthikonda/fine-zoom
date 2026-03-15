@@ -114,7 +114,44 @@ function handleWheel(event) {
   });
 }
 
-function normalizeShortcutKey(key) {
+function keyFromCode(code) {
+  if (!code) return "";
+  if (/^Key[A-Z]$/.test(code)) return code.slice(3);
+  if (/^Digit[0-9]$/.test(code)) return code.slice(5);
+  if (/^Numpad[0-9]$/.test(code)) return code;
+
+  const direct = new Set([
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "Escape",
+    "Tab",
+    "Enter",
+    "Backspace",
+    "Delete",
+    "Home",
+    "End",
+    "PageUp",
+    "PageDown",
+    "Insert",
+    "Space",
+    "NumpadAdd",
+    "NumpadSubtract",
+    "NumpadMultiply",
+    "NumpadDivide",
+    "NumpadDecimal"
+  ]);
+  if (direct.has(code)) return code;
+
+  return "";
+}
+
+function normalizeShortcutKey(event) {
+  const codeKey = keyFromCode(event.code);
+  if (codeKey) return codeKey;
+
+  const key = event.key;
   if (!key) return "";
   if (key === " ") return "Space";
   if (key === "Esc") return "Escape";
@@ -127,7 +164,7 @@ function normalizeShortcutKey(key) {
 }
 
 function buildShortcut(event) {
-  const key = normalizeShortcutKey(event.key);
+  const key = normalizeShortcutKey(event);
   if (!key) return "";
 
   const parts = [];
