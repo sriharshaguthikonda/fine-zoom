@@ -74,6 +74,7 @@ body {
 }
 
 .field input[type="number"],
+.field input[type="text"],
 .field select {
   width: 220px;
   padding: 8px 10px;
@@ -82,6 +83,22 @@ body {
   background: #fff;
   color: var(--ink);
   font-size: 14px;
+}
+
+.field input[type="text"] {
+  cursor: pointer;
+  font-family: "Consolas", "Courier New", monospace;
+}
+
+.field input[type="text"]:focus {
+  outline: 2px solid rgba(214, 106, 74, 0.45);
+  outline-offset: 1px;
+}
+
+.help {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
 }
 
 .field.checkbox {
@@ -127,6 +144,14 @@ button:hover {
   font-size: 13px;
 }
 
+#status[data-tone="ok"] {
+  color: #2f6f3f;
+}
+
+#status[data-tone="error"] {
+  color: #b23b28;
+}
+
 @media (max-width: 480px) {
   .card {
     margin: 10px;
@@ -138,6 +163,7 @@ button:hover {
   }
 
   .field input[type="number"],
+  .field input[type="text"],
   .field select {
     width: 100%;
   }

@@ -44,11 +44,13 @@ function clampNumber(value, min, max, fallback) {
   return Math.min(max, Math.max(min, value));
 }
 
-function showStatus(text) {
+function showStatus(text, tone = "ok") {
   statusEl.textContent = text;
+  statusEl.dataset.tone = tone;
   clearTimeout(statusTimer);
   statusTimer = setTimeout(() => {
     statusEl.textContent = "";
+    statusEl.dataset.tone = "";
   }, 1200);
 }
 
@@ -147,12 +149,38 @@ function bindShortcutCapture(field) {
 
 function saveSettings() {
   const values = readForm();
+  const validationError = validateShortcuts(values.shortcuts);
+  if (validationError) {
+    showStatus(validationError, "error");
+    return;
+  }
   chrome.storage.sync.set(values, () => showStatus("Saved"));
 }
 
 function scheduleSave() {
   clearTimeout(saveTimer);
   saveTimer = setTimeout(saveSettings, 150);
+}
+
+function validateShortcuts(shortcuts) {
+  const normalized = Object.values(shortcuts || {})
+    .map((value) => String(value || "").trim())
+    .filter(Boolean)
+    .map((value) => value.toLowerCase());
+
+  if (normalized.length === 0) {
+    return "Keep at least one shortcut";
+  }
+
+  const seen = new Set();
+  for (const value of normalized) {
+    if (seen.has(value)) {
+      return "Shortcuts must be unique";
+    }
+    seen.add(value);
+  }
+
+  return "";
 }
 
 function loadSettings() {

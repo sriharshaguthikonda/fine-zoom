@@ -35,6 +35,7 @@ Default keys (change directly in the popup):
 - Zoom in: Ctrl+Shift+ArrowUp
 - Zoom out: Ctrl+Shift+ArrowDown
 - Reset: Ctrl+Shift+0
+- Validation rules: shortcuts must be unique, and at least one shortcut must remain set.
 
 ## Troubleshooting
 - Ctrl/Cmd plus Wheel not working: some pages (like Chrome Web Store or browser internal pages) cannot be scripted. Try a normal web page.
