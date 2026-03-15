@@ -75,6 +75,7 @@ body {
 
 .field input[type="number"],
 .field input[type="text"],
+.field textarea,
 .field select {
   width: 220px;
   padding: 8px 10px;
@@ -83,6 +84,12 @@ body {
   background: #fff;
   color: var(--ink);
   font-size: 14px;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 88px;
+  font-family: "Consolas", "Courier New", monospace;
 }
 
 .field input[type="text"] {
@@ -99,6 +106,30 @@ body {
   margin: 8px 0 0;
   color: var(--muted);
   font-size: 12px;
+}
+
+.field-stack {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.field-stack span {
+  flex: 0 0 auto;
+}
+
+.field-stack textarea {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--accent);
 }
 
 .field.checkbox {
@@ -164,6 +195,7 @@ button:hover {
 
   .field input[type="number"],
   .field input[type="text"],
+  .field textarea,
   .field select {
     width: 100%;
   }
@@ -171,5 +203,10 @@ button:hover {
   .footer {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .actions {
+    width: 100%;
+    flex-direction: column;
   }
 }

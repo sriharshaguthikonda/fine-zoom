@@ -7,6 +7,7 @@
 - Shift plus Wheel zoom with a dedicated default 5% step.
 - In-popup customizable keyboard shortcuts for zoom in, zoom out, and reset.
 - Shortcut matching is layout-robust (based on physical key codes where possible).
+- Per-site shortcut scope control (disable keyboard shortcuts on selected hosts).
 - Optional Ctrl/Cmd plus Wheel to zoom, or block browser zoom while keeping scroll.
 - Adjustable scroll threshold, delay, and direction.
 
@@ -37,6 +38,10 @@ Default keys (change directly in the popup):
 - Zoom out: Ctrl+Shift+ArrowDown
 - Reset: Ctrl+Shift+0
 - Validation rules: shortcuts must be unique, and at least one shortcut must remain set.
+
+### Shortcut Scope
+- Add hosts in the popup to disable keyboard shortcuts on those sites.
+- Use "Disable on this site" / "Enable on this site" for quick control of the active tab host.
 
 ## Troubleshooting
 - Ctrl/Cmd plus Wheel not working: some pages (like Chrome Web Store or browser internal pages) cannot be scripted. Try a normal web page.

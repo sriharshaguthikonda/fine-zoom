@@ -81,6 +81,18 @@
         <p class="help">Shortcut handling works on normal web pages, not browser-internal pages.</p>
       </section>
 
+      <section class="section">
+        <h2>Shortcut Scope</h2>
+        <label class="field field-stack">
+          <span>Disable keyboard shortcuts on hosts (one per line)</span>
+          <textarea id="shortcutDisabledHosts" rows="4" placeholder="example.com"></textarea>
+        </label>
+        <div class="actions">
+          <button id="disableCurrentHost" type="button">Disable on this site</button>
+          <button id="enableCurrentHost" type="button" class="btn-ghost">Enable on this site</button>
+        </div>
+      </section>
+
       <footer class="footer">
         <button id="reset" type="button">Reset to defaults</button>
         <span id="status" role="status"></span>

@@ -13,7 +13,8 @@ const DEFAULTS = {
     zoomIn: "Ctrl+Shift+ArrowUp",
     zoomOut: "Ctrl+Shift+ArrowDown",
     zoomReset: "Ctrl+Shift+0"
-  }
+  },
+  shortcutDisabledHosts: []
 };
 
 let settings = { ...DEFAULTS };
@@ -40,6 +41,12 @@ chrome.storage.onChanged.addListener((changes, area) => {
         ...DEFAULTS.shortcuts,
         ...(change.newValue || {})
       };
+      continue;
+    }
+    if (key === "shortcutDisabledHosts") {
+      settings.shortcutDisabledHosts = Array.isArray(change.newValue)
+        ? change.newValue
+        : [];
       continue;
     }
     settings[key] = change.newValue;
@@ -189,9 +196,25 @@ function isEditableTarget(target) {
   return tagName === "INPUT" || tagName === "TEXTAREA" || tagName === "SELECT";
 }
 
+function isShortcutHostDisabled(hostname) {
+  const host = String(hostname || "").toLowerCase();
+  if (!host) return false;
+
+  const disabledHosts = Array.isArray(settings.shortcutDisabledHosts)
+    ? settings.shortcutDisabledHosts
+    : [];
+
+  return disabledHosts.some((entry) => {
+    const normalized = String(entry || "").toLowerCase().replace(/^\./, "");
+    if (!normalized) return false;
+    return host === normalized || host.endsWith(`.${normalized}`);
+  });
+}
+
 function handleKeydown(event) {
   if (event.defaultPrevented || event.repeat) return;
   if (isEditableTarget(event.target)) return;
+  if (isShortcutHostDisabled(window.location.hostname)) return;
 
   const shortcut = buildShortcut(event);
   if (!shortcut) return;

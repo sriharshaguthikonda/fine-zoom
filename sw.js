@@ -13,7 +13,8 @@ const DEFAULTS = {
     zoomIn: "Ctrl+Shift+ArrowUp",
     zoomOut: "Ctrl+Shift+ArrowDown",
     zoomReset: "Ctrl+Shift+0"
-  }
+  },
+  shortcutDisabledHosts: []
 };
 
 function clamp(value, min, max) {

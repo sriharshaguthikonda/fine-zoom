@@ -13,7 +13,8 @@ const DEFAULTS = {
     zoomIn: "Ctrl+Shift+ArrowUp",
     zoomOut: "Ctrl+Shift+ArrowDown",
     zoomReset: "Ctrl+Shift+0"
-  }
+  },
+  shortcutDisabledHosts: []
 };
 
 const fields = {
@@ -24,7 +25,8 @@ const fields = {
   scrollThreshold: document.getElementById("scrollThreshold"),
   minDelayMs: document.getElementById("minDelayMs"),
   directionReversed: document.getElementById("directionReversed"),
-  smoothScroll: document.getElementById("smoothScroll")
+  smoothScroll: document.getElementById("smoothScroll"),
+  shortcutDisabledHosts: document.getElementById("shortcutDisabledHosts")
 };
 
 const shortcutFields = {
@@ -35,6 +37,8 @@ const shortcutFields = {
 
 const statusEl = document.getElementById("status");
 const resetBtn = document.getElementById("reset");
+const disableCurrentHostBtn = document.getElementById("disableCurrentHost");
+const enableCurrentHostBtn = document.getElementById("enableCurrentHost");
 
 let saveTimer = null;
 let statusTimer = null;
@@ -64,6 +68,7 @@ function readForm() {
     minDelayMs: clampNumber(parseInt(fields.minDelayMs.value, 10), 0, 1000, DEFAULTS.minDelayMs),
     directionReversed: fields.directionReversed.checked,
     smoothScroll: fields.smoothScroll.checked,
+    shortcutDisabledHosts: parseHostList(fields.shortcutDisabledHosts.value),
     shortcuts: {
       zoomIn: shortcutFields.zoomIn.value.trim(),
       zoomOut: shortcutFields.zoomOut.value.trim(),
@@ -90,6 +95,7 @@ function writeForm(values) {
   fields.minDelayMs.value = merged.minDelayMs;
   fields.directionReversed.checked = merged.directionReversed;
   fields.smoothScroll.checked = merged.smoothScroll;
+  fields.shortcutDisabledHosts.value = (merged.shortcutDisabledHosts || []).join("\n");
 
   shortcutFields.zoomIn.value = merged.shortcuts.zoomIn;
   shortcutFields.zoomOut.value = merged.shortcuts.zoomOut;
@@ -220,6 +226,55 @@ function validateShortcuts(shortcuts) {
   return "";
 }
 
+function normalizeHostToken(rawValue) {
+  const trimmed = String(rawValue || "").trim().toLowerCase();
+  if (!trimmed) return "";
+
+  let value = trimmed.replace(/^[a-z]+:\/\//i, "");
+  value = value.split(/[/?#]/)[0] || "";
+  value = value.split(":")[0] || "";
+  value = value.replace(/^\./, "").trim();
+
+  if (!value || /\s/.test(value)) return "";
+  return value;
+}
+
+function parseHostList(textValue) {
+  const parts = String(textValue || "")
+    .split(/[\n,]/)
+    .map((part) => normalizeHostToken(part))
+    .filter(Boolean);
+  return Array.from(new Set(parts));
+}
+
+async function getActiveTabHostname() {
+  const tabs = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+  const tab = tabs[0];
+  if (!tab?.url) return "";
+  try {
+    const url = new URL(tab.url);
+    return normalizeHostToken(url.hostname);
+  } catch {
+    return "";
+  }
+}
+
+function updateDisabledHostsField(hostname, shouldDisable) {
+  if (!hostname) {
+    showStatus("Host not available on this page", "error");
+    return;
+  }
+
+  const current = parseHostList(fields.shortcutDisabledHosts.value);
+  const next = shouldDisable
+    ? Array.from(new Set([...current, hostname]))
+    : current.filter((item) => item !== hostname);
+
+  fields.shortcutDisabledHosts.value = next.join("\n");
+  scheduleSave();
+  showStatus(shouldDisable ? `Disabled on ${hostname}` : `Enabled on ${hostname}`);
+}
+
 function loadSettings() {
   chrome.storage.sync.get(DEFAULTS, (items) => {
     writeForm(items);
@@ -241,6 +296,18 @@ resetBtn.addEventListener("click", () => {
     loadSettings();
     showStatus("Defaults restored");
   });
+});
+
+disableCurrentHostBtn.addEventListener("click", () => {
+  getActiveTabHostname()
+    .then((hostname) => updateDisabledHostsField(hostname, true))
+    .catch(() => showStatus("Unable to read current host", "error"));
+});
+
+enableCurrentHostBtn.addEventListener("click", () => {
+  getActiveTabHostname()
+    .then((hostname) => updateDisabledHostsField(hostname, false))
+    .catch(() => showStatus("Unable to read current host", "error"));
 });
 
 loadSettings();
