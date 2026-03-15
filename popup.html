@@ -18,6 +18,17 @@
           <span>Step size (%)</span>
           <input id="stepPercent" type="number" min="0.1" max="10" step="0.1">
         </label>
+        <label class="field">
+          <span>Shift plus Wheel step (%)</span>
+          <input id="shiftWheelStepPercent" type="number" min="0.1" max="20" step="0.1">
+        </label>
+        <label class="field">
+          <span>Shift plus Wheel mode</span>
+          <select id="shiftWheelMode">
+            <option value="zoom">Zoom using Shift wheel step</option>
+            <option value="off">Off</option>
+          </select>
+        </label>
       </section>
 
       <section class="section">
@@ -54,7 +65,20 @@
 
       <section class="section">
         <h2>Shortcuts</h2>
-        <p>Change shortcuts in chrome://extensions/shortcuts.</p>
+        <label class="field">
+          <span>Zoom in</span>
+          <input id="shortcutZoomIn" type="text" readonly>
+        </label>
+        <label class="field">
+          <span>Zoom out</span>
+          <input id="shortcutZoomOut" type="text" readonly>
+        </label>
+        <label class="field">
+          <span>Reset zoom</span>
+          <input id="shortcutZoomReset" type="text" readonly>
+        </label>
+        <p class="help">Click a shortcut field and press keys to set it. Use Backspace/Delete to clear.</p>
+        <p class="help">Shortcut handling works on normal web pages, not browser-internal pages.</p>
       </section>
 
       <footer class="footer">

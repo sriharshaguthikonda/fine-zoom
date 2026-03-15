@@ -1,10 +1,11 @@
 # Fine Zoom Step
 
-Fine-grained tab zoom for Chromium browsers using keyboard commands and optional Ctrl/Cmd plus Wheel control.
+ Fine-grained tab zoom for Chromium browsers using customizable keyboard shortcuts plus Ctrl/Cmd and Shift wheel controls.
 
 ## Features
 - Customizable zoom step size (default 1%).
-- Keyboard shortcuts for zoom in, zoom out, and reset.
+- Shift plus Wheel zoom with a dedicated default 5% step.
+- In-popup customizable keyboard shortcuts for zoom in, zoom out, and reset.
 - Optional Ctrl/Cmd plus Wheel to zoom, or block browser zoom while keeping scroll.
 - Adjustable scroll threshold, delay, and direction.
 
@@ -13,11 +14,13 @@ Fine-grained tab zoom for Chromium browsers using keyboard commands and optional
 2. Enable Developer mode.
 3. Click Load unpacked and select this folder.
 4. Click the extension icon to open the popup.
-5. Use the shortcuts or Ctrl/Cmd plus Wheel to zoom.
+5. Use shortcuts, Shift plus Wheel (5% default), or Ctrl/Cmd plus Wheel to zoom.
 
 ## How to Use
 ### Popup settings
 - Step size (%): how much each zoom action changes the current zoom.
+- Shift plus Wheel step (%): separate step size used by Shift plus Wheel zoom.
+- Shift plus Wheel mode: enable or disable Shift plus Wheel zoom interception.
 - Ctrl/Cmd plus Wheel:
   - Off: do nothing.
   - Zoom using step size: uses the same step size as the shortcuts.
@@ -28,14 +31,14 @@ Fine-grained tab zoom for Chromium browsers using keyboard commands and optional
 - Smooth scroll when blocking browser zoom: keep scrolling fluid when zoom is blocked.
 
 ### Shortcuts
-Default keys (change in `chrome://extensions/shortcuts`):
-- Zoom in: Ctrl+Shift+Up
-- Zoom out: Ctrl+Shift+Down
+Default keys (change directly in the popup):
+- Zoom in: Ctrl+Shift+ArrowUp
+- Zoom out: Ctrl+Shift+ArrowDown
 - Reset: Ctrl+Shift+0
 
 ## Troubleshooting
 - Ctrl/Cmd plus Wheel not working: some pages (like Chrome Web Store or browser internal pages) cannot be scripted. Try a normal web page.
-- Shortcuts not firing: check `chrome://extensions/shortcuts` for conflicts and reassign.
+- Shortcuts not firing: shortcut handling works only on normal web pages, not on `chrome://` or extension pages.
 - Zoom stops changing: zoom is clamped between 25% and 500% for safety.
 
 ## Maintain / Release
@@ -45,4 +48,4 @@ Default keys (change in `chrome://extensions/shortcuts`):
 3. Upload the zip to the Chrome Web Store or Microsoft Edge Add-ons.
 
 ## Notes
-- Browser-reserved Ctrl/Command plus plus/minus shortcuts cannot be reliably overridden; use the extension commands instead.
+- Browser-reserved Ctrl/Command plus plus/minus shortcuts cannot be reliably overridden; use the extension's custom shortcut fields instead.
