@@ -1,0 +1,25 @@
+﻿{
+    "schemaVersion":  "repo-map-artifact-branch/v1",
+    "repo":  "sriharshaguthikonda/fine-zoom",
+    "generatedAt":  "2026-06-01T06:05:04.4608230Z",
+    "source":  "Repo_maps GitHub footprint publish runner",
+    "publishBranch":  "repo-intel-artifacts",
+    "mapCount":  2,
+    "totalBytes":  57903,
+    "maps":  [
+                 {
+                     "name":  "main",
+                     "ref":  "refs/remotes/origin/main",
+                     "commit":  "58e2b6ed0040ce20e137f6eb0b86c33fbc2c6d85",
+                     "path":  ".repo-intel/branches/remote-origin/main__58e2b6ed0040/repo-map-full.json",
+                     "bytes":  35662
+                 },
+                 {
+                     "name":  "master",
+                     "ref":  "refs/remotes/origin/master",
+                     "commit":  "47da1ad0240fd13a9f21daad74a8b9581d93109b",
+                     "path":  ".repo-intel/branches/remote-origin/master__47da1ad0240f/repo-map-full.json",
+                     "bytes":  15774
+                 }
+             ]
+}
